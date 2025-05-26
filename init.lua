@@ -107,6 +107,9 @@ vim.opt.number = true
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
 
+-- [rishabh7m]
+vim.o.guicursor = "a:block"
+
 -- Don't show the mode, since it's already in the status line
 vim.opt.showmode = false
 
@@ -977,8 +980,10 @@ require('lazy').setup({
     --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
   },
   -- [rishabh7m] The following sections will be from the custom plugins
-  -- Neo-Tree 
+  -- Neo-Tree
   require 'custom.plugins.neo-tree',
+  require 'custom.plugins.ts',
+  require 'custom.plugins.react',
 
   -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
