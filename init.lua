@@ -109,6 +109,10 @@ vim.opt.mouse = 'a'
 
 -- [rishabh7m]
 vim.o.guicursor = "a:block"
+vim.o.expandtab = true      -- Use spaces instead of tabs
+vim.o.tabstop = 4           -- Number of spaces that a <Tab> counts for
+vim.o.shiftwidth = 4        -- Number of spaces to use for autoindent
+vim.o.softtabstop = 4       -- Number of spaces a tab counts for while editing
 
 -- Don't show the mode, since it's already in the status line
 vim.opt.showmode = false
@@ -984,6 +988,7 @@ require('lazy').setup({
   require 'custom.plugins.neo-tree',
   require 'custom.plugins.ts',
   require 'custom.plugins.react',
+  require 'custom.plugins.lint',
 
   -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
@@ -1032,6 +1037,10 @@ require('lazy').setup({
     },
   },
 })
+
+ -- [rishabh7m]
+local keymaps = require("keymaps")
+keymaps.setup()
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
