@@ -23,6 +23,7 @@ return {
 
     -- Add your own debuggers here
     'leoluz/nvim-dap-go',
+    'mfussenegger/nvim-jdtls',
   },
   keys = {
     -- Basic debugging keymaps, feel free to change to your liking!
@@ -95,6 +96,8 @@ return {
       ensure_installed = {
         -- Update this to ensure that you have the debuggers for the langs you want
         'delve',
+        'java-debug-adapter',
+        'java-test',
       },
     }
 
@@ -144,5 +147,32 @@ return {
         detached = vim.fn.has 'win32' == 0,
       },
     }
+
+    -- Java debugging configuration
+    -- Configure Java debug adapter
+    dap.configurations.java = {
+      {
+        type = 'java',
+        request = 'attach',
+        name = 'Debug (Attach) - Remote',
+        hostName = '127.0.0.1',
+        port = 5005,
+      },
+      {
+        type = 'java',
+        request = 'launch',
+        name = 'Debug (Launch) - Current File',
+        program = '${file}',
+      },
+    }
+
+    dap.adapters.java = function(callback)
+      -- JDTLS provides the debug adapter
+      callback {
+        type = 'server',
+        host = '127.0.0.1',
+        port = 5005,
+      }
+    end
   end,
 }
