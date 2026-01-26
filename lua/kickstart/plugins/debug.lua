@@ -98,6 +98,7 @@ return {
         'delve',
         'java-debug-adapter',
         'java-test',
+        'codelldb',  -- C/C++ debugger
       },
     }
 

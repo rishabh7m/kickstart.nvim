@@ -10,6 +10,11 @@ return {
         typescriptreact = { "eslint_d" },
         javascript = { "eslint_d" },
         javascriptreact = { "eslint_d" },
+        sql = { 'sqlfluff' },
+        pgsql = { 'sqlfluff' },
+        plpgsql = { 'sqlfluff' },
+        c = { 'clangtidy' },
+        cpp = { 'clangtidy' },
       }
 
       -- Automatically lint on events

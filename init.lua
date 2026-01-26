@@ -215,6 +215,18 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- PostgreSQL/SQL indentation settings
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'sql', 'pgsql', 'plpgsql' },
+  callback = function()
+    vim.opt_local.tabstop = 2
+    vim.opt_local.shiftwidth = 2
+    vim.opt_local.softtabstop = 2
+    vim.opt_local.expandtab = true
+  end,
+  desc = 'Set PostgreSQL/SQL indentation to 2 spaces',
+})
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -715,6 +727,12 @@ require('lazy').setup({
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
+        'postgres_lsp',  -- PostgreSQL LSP server
+        'pg_format',     -- PostgreSQL formatter
+        'sqlfluff',      -- SQL linter
+        'clangd',        -- C/C++ LSP server
+        'clang-format',  -- C/C++ formatter
+        'clangtidy',     -- C/C++ linter
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -769,6 +787,9 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
+        sql = { 'pg_format' },
+        pgsql = { 'pg_format' },
+        plpgsql = { 'pg_format' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
@@ -989,7 +1010,9 @@ require('lazy').setup({
   require 'custom.plugins.ts',
   require 'custom.plugins.react',
   require 'custom.plugins.lint',
-  require("custom.plugins.groovy").setup()
+  require("custom.plugins.groovy").setup(),
+  require 'custom.plugins.postgres',
+  require 'custom.plugins.cpp',
 
   -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
@@ -1003,7 +1026,7 @@ require('lazy').setup({
   -- require 'kickstart.plugins.debug',
   -- require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
-  -- require 'kickstart.plugins.autopairs',
+  require 'kickstart.plugins.autopairs',
   -- require 'kickstart.plugins.neo-tree',
   -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
