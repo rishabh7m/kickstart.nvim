@@ -22,9 +22,17 @@ return {
     },
     })
 
-    -- Key mapping to toggle Neo-tree
-    vim.keymap.set("n", "<leader>p", ":Neotree toggle<CR>", { desc = "Toggle File Explorer" })
-    vim.keymap.set("n", "<leader>pf", ":Neotree focus<CR>", { desc = "Focus Neo-tree" })
+    -- VSCode-like sidebar: <leader>e toggles, <leader>o jumps focus between
+    -- the tree and the last code window so switching focus is one keystroke.
+    vim.keymap.set("n", "<leader>e", ":Neotree toggle<CR>", { desc = "Toggle File [E]xplorer" })
+    vim.keymap.set("n", "<leader>o", function()
+      -- If focused on neo-tree, jump back to previous window; else focus tree
+      if vim.bo.filetype == "neo-tree" then
+        vim.cmd("wincmd p")
+      else
+        vim.cmd("Neotree focus")
+      end
+    end, { desc = "T[o]ggle focus between explorer and code" })
 
     -- Optional: open Neo-tree automatically on startup
     -- vim.api.nvim_create_autocmd("VimEnter", {
