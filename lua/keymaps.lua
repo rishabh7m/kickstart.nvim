@@ -15,12 +15,12 @@ function M.setup()
   map('n', '<leader>tn', '<cmd>tabnew<CR>',           '[T]ab [N]ew')
   map('n', '<leader>tc', '<cmd>tabclose<CR>',         '[T]ab [C]lose')
   map('n', '<leader>to', '<cmd>tabonly<CR>',          '[T]ab close [O]thers')
+  -- NOTE: <Tab> and <C-i> share the same terminal byte, so mapping <Tab>
+  -- below also rebinds the jumplist "forward" key. Use <C-o> to jump back
+  -- and `gt` / `gT` if you ever want to keep <Tab> for jumplist.
   map('n', '<Tab>',      '<cmd>tabnext<CR>',          'Next tab')
   map('n', '<S-Tab>',    '<cmd>tabprevious<CR>',      'Previous tab')
   -- gt / gT still work as vim defaults
-
-  -- Open the file under cursor in a new tab (works in Neo-tree with default 't')
-  map('n', '<leader>tf', '<cmd>tabedit %<CR>',        '[T]ab from current [F]ile')
 
   -----------------------------------------------------------------------------
   -- Buffers (scratch / unsaved scratch buffer)
@@ -60,15 +60,14 @@ function M.setup()
   end, '[N]ew [D]irectory')
 
   -----------------------------------------------------------------------------
-  -- Code formatting by filetype (uses conform.nvim with LSP fallback)
+  -- Code formatting: <leader>cf is defined as a lazy key on conform.nvim
+  -- in init.lua, so nothing to bind here.
   -----------------------------------------------------------------------------
-  map('', '<leader>cf', function()
-    require('conform').format { async = true, lsp_format = 'fallback' }
-  end, '[C]ode [F]ormat')
 
   -----------------------------------------------------------------------------
   -- Terminal (builtin :terminal)
   -- VSCode opens a panel at the bottom; we mimic with a horizontal split.
+  -- Exit terminal mode with <Esc><Esc> (set in init.lua).
   -----------------------------------------------------------------------------
   map('n', '<leader>tt', function()
     vim.cmd('botright 15split | terminal')
@@ -79,9 +78,6 @@ function M.setup()
     vim.cmd('vsplit | terminal')
     vim.cmd('startinsert')
   end, '[T]erminal [V]ertical split')
-
-  -- Esc to leave terminal mode (also <Esc><Esc> from kickstart)
-  map('t', '<C-\\>', [[<C-\><C-n>]], 'Exit terminal mode')
 
   -----------------------------------------------------------------------------
   -- Window/sidebar focus (Neo-tree)
